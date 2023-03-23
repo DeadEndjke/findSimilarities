@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class FindSimilarities {
-    public static int getLevenshteinDistance(String X, String Y)
+    public static int getLevenShteinDistance(String X, String Y)
     {
         int m = X.length();
         int n = Y.length();
@@ -38,28 +38,28 @@ public class FindSimilarities {
 
         double maxLength = Double.max(x.length(), y.length());
         if (maxLength > 0) {
-            return (maxLength - getLevenshteinDistance(x, y)) / maxLength;
+            return (maxLength - getLevenShteinDistance(x, y)) / maxLength;
         }
         return 1.0;
     }
     public static List<String> getSimilarities(String[] firstArray, String[] secondArray){
-        String[] firstStrings;
-        String[] secondStrings;
+        String[] biggerArray;
+        String[] smallerArray;
         if(secondArray.length > firstArray.length){
-            firstStrings = secondArray;
-            secondStrings = firstArray;
+            biggerArray = secondArray;
+            smallerArray = firstArray;
         }else{
-            firstStrings = firstArray;
-            secondStrings = secondArray;
+            biggerArray = firstArray;
+            smallerArray = secondArray;
         }
         List<Double> listOfCoefficients = new ArrayList<>();
         Map<Double, String> mapOfAllSimilarities = new HashMap<>();
         List<String> listOfTheBestSimilarities = new ArrayList<>();
 
-        for (String secondString : secondStrings) {
-            for (String firstString : firstStrings) {
-                double similar = findSimilarity(secondString, firstString);
-                mapOfAllSimilarities.put(similar, firstString + ":" + secondString);
+        for (String smallerArrayString : smallerArray) {
+            for (String biggerArrayString : biggerArray) {
+                double similar = findSimilarity(smallerArrayString, biggerArrayString);
+                mapOfAllSimilarities.put(similar, biggerArrayString + ":" + smallerArrayString);
                 listOfCoefficients.add(similar);
 
             }
@@ -70,7 +70,7 @@ public class FindSimilarities {
         }
 
         int k = 0;
-        for (String firstString : firstStrings) {
+        for (String firstString : biggerArray) {
             for (String s : listOfTheBestSimilarities) {
                 if (s.contains(firstString)) {
                     k++;
